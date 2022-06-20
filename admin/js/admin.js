@@ -33,10 +33,15 @@ function selectGoods() {
         function(data) {
             data = JSON.parse(data);
             $('#gname').val(data.name);
-            $('#gcost').val(data.cost);
+            $('#gprice1').val(data.price1);
+            $('#gprice2').val(data.price2);
+            $('#gprice3').val(data.price3);
             $('#gdescr').val(data.description);
             $('#gorder').val(data.ord);
             $('#gimg').val(data.img);
+            $('#gsize1').val(data.size1);
+            $('#gsize2').val(data.size2);
+            $('#gsize3').val(data.size3);
             $('#gid').val(data.id);
         }
     )
@@ -51,16 +56,21 @@ function saveToDb() {
                 "action" : "updateGoods",
                 "id" : id,
                 "gname" : $('#gname').val(),
-                "gcost" : $('#gcost').val(),
+                "gprice1" : $('#gprice1').val(),
+                "gprice2" : $('#gprice2').val(),
+                "gprice3" : $('#gprice3').val(),
                 "gdescr" : $('#gdescr').val(),
                 "gorder" : $('#gorder').val(),
+                "gsize1" : $('#gsize1').val(),
+                "gsize2" : $('#gsize2').val(),
+                "gsize3" : $('#gsize3').val(),
                 "gimg" : $('#gimg').val()
             },
             function(data) {
                 if (data==1) {
-                    alert('Запись добавлена');
+                    alert('Товар обновлен');
                     init();
-                } 
+                }
                 else {
                     console.log(data);
                 }
@@ -74,14 +84,19 @@ function saveToDb() {
                 "action" : "newGoods",
                 "id" : 0,
                 "gname" : $('#gname').val(),
-                "gcost" : $('#gcost').val(),
+                "gprice1" : $('#gprice1').val(),
+                "gprice2" : $('#gprice2').val(),
+                "gprice3" : $('#gprice3').val(),
                 "gdescr" : $('#gdescr').val(),
                 "gorder" : $('#gorder').val(),
-                "gimg" : $('#gimg').val()
+                "gimg" : $('#gimg').val(),
+                "gsize1" : $('#gsize1').val(),
+                "gsize2" : $('#gsize2').val(),
+                "gsize3" : $('#gsize3').val()
             },
             function(data) {
                 if (data==1) {
-                    alert('Запись добавлена');
+                    alert('Товар добавлен');
                     init();
                 } 
                 else {

@@ -49,12 +49,17 @@ function updateGoods() {
     $conn = connect();
     $id = $_POST['id'];
     $name = $_POST['gname'];
-    $cost = $_POST['gcost'];
+    $price1 = $_POST['gprice1'];
+    $price2 = $_POST['gprice2'];
+    $price3 = $_POST['gprice3'];
     $descr = $_POST['gdescr'];
     $ord = $_POST['gorder'];
     $img = $_POST['gimg'];
+    $size1 = $_POST['gsize1'];
+    $size2 = $_POST['gsize2'];
+    $size3 = $_POST['gsize3'];
 
-    $sql = "UPDATE goods SET name = '$name', cost = '$cost', description = '$descr', ord = '$ord', img = '$img' WHERE id='$id'";
+    $sql = "UPDATE goods SET name = '$name', price1 = '$price1', price2 = '$price2', price3 = '$price3', description = '$descr', ord = '$ord', img = '$img', size1 = '$size1', size2 = '$size2', size3 = '$size3' WHERE id='$id'";
 
     if (mysqli_query($conn, $sql)) {
         echo "1";
@@ -69,12 +74,17 @@ function updateGoods() {
 function newGoods() {
     $conn = connect();
     $name = $_POST['gname'];
-    $cost = $_POST['gcost'];
+    $price1 = $_POST['gprice1'];
+    $price2 = $_POST['gprice2'];
+    $price3 = $_POST['gprice3'];
     $descr = $_POST['gdescr'];
     $ord = $_POST['gorder'];
     $img = $_POST['gimg'];
+    $size1 = $_POST['gsize1'];
+    $size2 = $_POST['gsize2'];
+    $size3 = $_POST['gsize3'];
 
-    $sql = "INSERT INTO goods(name, cost, description, ord, img) VALUES ('$name', '$cost', '$descr', '$ord', '$img')";
+    $sql = "INSERT INTO goods(name, price1, price2, price3, description, ord, img, size1, size2, size3) VALUES ('$name', '$price1', '$price2', '$price3', '$descr', '$ord', '$img', '$size1', '$size2', '$size3')";
 
     if (mysqli_query($conn, $sql)) {
         echo "1";

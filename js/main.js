@@ -4,7 +4,7 @@ function init() {
     //вычитуем файл goods.json
     // $.getJSON("goods.json", goodsOut);
     $.post(
-        "admin/core.php",
+        "../admin/core.php",
         {
             "action" : 'loadGoods'
         },
@@ -15,15 +15,34 @@ function init() {
 function goodsOut(data) {
     // вывод на  страницу
     data = JSON.parse(data);
-    console.log(data);
+    // console.log(data);
     var out='';
     for (var key in data) {
-        out +='<div class="cart">';
-        out +=`<button class="later" data-id="${key}">&hearts;</button>`;
-        out +=`<p class="name"><a href="goods.html#${key}">${data[key].name}</a> </p>`;
-        out +=`<img src="images/${data[key].img}" alt="">`;
-        out +=`<div class="cost">${data[key].cost}</div>`;
-        out +=`<button class="add-to-cart" data-id="${key}">Купить</button>`;
+        out +='<div class="cart col-lg-4 col-md-6 col-sm-12">';
+        
+        if (localStorage.getItem('later')) {
+
+            // если есть - расшифроваем и запсываем в переменный
+            later = JSON.parse(localStorage.getItem('later'));
+
+            // console.log(later); 
+            
+            if(later[key] == data[key].id) {
+                out +=`<button class="later active" title="Удалить из избранное" data-id="${key}"><i class="icon-heart"></i></button>`;
+            } 
+            else {
+                out +=`<button class="later" title="В избранное" data-id="${key}"><i class="icon-heart"></i></button>`;
+            }
+            
+        } else {
+            out +=`<button class="later" title="В избранное" data-id="${key}"><i class="icon-heart"></i></button>`;
+        }
+       
+        
+        out +=`<a href="../goods.php#${key}"><span class="cart-img" style="background-image: url(../images/${data[key].img}")></span></a>`;
+        out +=`<p class="name"><a href="../goods.php#${key}">${data[key].name}</a> </p>`;
+        // out +=`<div class="cost">${data[key].cost}</div>`;
+        // out +=`<button class="add-to-cart" data-id="${key}">Купить</button>`;
         out +='</div>'
     }
     $('.goods-out').html(out);
@@ -39,10 +58,19 @@ function addToLater() {
         // если есть - расшифроваем и запсываем в переменный
         later = JSON.parse(localStorage.getItem('later'));
     }
-    alert('Добавлено в Избранное');
+    
     var id = $(this).attr('data-id');
-    later[id] = 1;
+    
+    if(later[id] == id) {
+        delete later[id];
+        alert('Удалено из Избранное');
+    } 
+    else {
+        later[id] = id;
+        alert('Добавлено в Избранное');
+    }
     localStorage.setItem('later', JSON.stringify(later)); // корзину в строку
+    init();
 }
 
 function addToCart() {
@@ -67,11 +95,14 @@ function saveCart() {
 
 function showMiniCart() {
     // показываем мини карзину
-    var out="";
-    for(var key in cart) {
-        out += key + ' --- ' + cart[key]+'<br>';
+    var out=0;
+    for(var id in cart) {
+        // out += key + ' --- ' + cart[key]+'<br>';
+        for (let index = 0; index < cart[id].length; index++) {
+            out += cart[id][index].id;
+        }
     }
-    $('.mini-cart').html(out);
+    $('.number-of-cart').html(": " + out);
 }
 
 function loadCart() {
